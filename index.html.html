@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#5A7C49">
+    <meta name="apple-mobile-web-app-title" content="Olivea Mikulov">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9saXZlYSBNaWt1bG92IC0gUG9rbGFkbmEiLAogICJzaG9ydF9uYW1lIjogIk9saXZlYSIsCiAgImRlc2NyaXB0aW9uIjogIlBva2xhZG7DrSBzeXN0w6ltIHBybyBPbGl2ZWEgTWlrdWxvdiIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2Y1ZjVmNSIsCiAgInRoZW1lX2NvbG9yIjogIiM1QTdDNDkiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjM1QTdDNDknLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjNlbScgZmlsbD0nd2hpdGUnJTNF8J+Ntwolm0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
+    <title>Olivea Mikulov - Pokladna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: #f5f5f5;
+            padding: 0;
+            margin: 0;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5A7C49 0%, #4a6339 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                padding: 20px 30px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .nav-buttons {
+                gap: 10px;
+                width: auto;
+            }
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            flex: 1 1 auto;
+            min-width: fit-content;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+        }
+
+        .products-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+
+        .category {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .category {
+                padding: 15px;
+            }
+        }
+
+        .category-header {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+            .category-header {
+                font-size: 18px;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+        }
+
+        .category-wine { background: #C4696D; }
+        .category-wine-bottle { background: #E87C87; }
+        .category-coffee { background: #A89078; }
+        .category-food { background: #7FB069; }
+        .category-burcak { background: #FFB366; }
+        .category-degustace { background: #B388EB; }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        @media (min-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        .product-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 15px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-height: 80px;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 768px) {
+            .product-btn {
+                padding: 20px 10px;
+                font-size: 14px;
+                min-height: 100px;
+            }
+        }
+
+        .product-btn:active {
+            transform: scale(0.95);
+            background: #f0f0f0;
+            border-color: #5A7C49;
+        }
+
+        .product-name {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .product-price {
+            color: #5A7C49;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        @media (min-width: 768px) {
+            .product-price {
+                font-size: 18px;
+            }
+        }
+
+        .cart-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        @media (min-width: 1024px) {
+            .cart-section {
+                padding: 20px;
+            }
+        }
+
+        .cart-input-box {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .cart-label {
+            font-size: 16px;
+            color: #999;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 300px;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+
+        @media (min-width: 768px) {
+            .cart-items {
+                max-height: 400px;
+            }
+        }
+
+        .cart-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 250px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (min-width: 768px) {
+            .cart-items {
+                max-height: 400px;
+            }
+        }
+
+        .cart-item {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .cart-item-controls {
+                gap: 10px;
+            }
+        }
+
+        .qty-btn {
+            background: #5A7C49;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 768px) {
+            .qty-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+            }
+        }
+
+        .qty-btn:active {
+            background: #4a6339;
+            transform: scale(0.9);
+        }
+
+        .qty-display {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background: #E87C87;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            touch-action: manipulation;
+            font-size: 16px;
+        }
+
+        .remove-btn:active {
+            background: #d96d78;
+            transform: scale(0.9);
+        }
+
+        .discount-btn {
+            background: #FFD97D;
+            color: #333;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 768px) {
+            .discount-btn {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .discount-btn:active {
+            background: #f0ca6e;
+            transform: scale(0.9);
+        }
+
+        .discount-badge {
+            color: #dc3545;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .cart-total {
+            background: linear-gradient(135deg, #5A7C49 0%, #4a6339 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .total-label {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .total-amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-cancel-full {
+            grid-column: 1 / -1;
+        }
+
+        .btn-cancel-last-sale {
+            grid-column: 1 / -1;
+        }
+
+        .btn {
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background: #5A7C49;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4a6339;
+        }
+
+        .btn-cash {
+            background: #67B7D1;
+            color: white;
+        }
+
+        .btn-cash:hover {
+            background: #5aa3ba;
+        }
+
+        .btn-discount {
+            background: #FFD97D;
+            color: #333;
+        }
+
+        .btn-discount:hover {
+            background: #f0ca6e;
+        }
+
+        .btn-split {
+            background: #FFB366;
+            color: white;
+        }
+
+        .btn-split:hover {
+            background: #f0a055;
+        }
+
+        .btn-cancel-last-sale {
+            background: #E87C87;
+            color: white;
+        }
+
+        .btn-cancel-last-sale:hover {
+            background: #d96d78;
+        }
+
+        .btn-cancel-last-sale:active {
+            background: #ca5e69;
+        }
+
+        .btn-secondary {
+            background: #E87C87;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #d96d78;
+        }
+
+        .btn-secondary:active {
+            background: #ca5e69;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+        }
+
+        .stats-section, .settings-section {
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            height: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .stats-section, .settings-section {
+                padding: 20px;
+            }
+        }
+
+        .stats-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 480px) {
+            .stats-tabs {
+                display: flex;
+                gap: 10px;
+            }
+        }
+
+        .stat-tab {
+            flex: 1;
+            padding: 12px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 768px) {
+            .stat-tab {
+                font-size: 16px;
+            }
+        }
+
+        .stat-tab:active {
+            transform: scale(0.95);
+        }
+
+        .stat-tab.active {
+            background: #5A7C49;
+            color: white;
+        }
+
+        .stats-content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #5A7C49;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .product-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .product-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product-item-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .product-item-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .save-btn {
+            background: #5A7C49;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn:hover, .save-btn:hover {
+            background: #4a6339;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .edit-fields {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .export-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .export-btn:hover {
+            background: #138496;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                padding: 30px;
+                width: 90%;
+            }
+        }
+
+        input, select, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            -webkit-appearance: none;
+        }
+
+        @media (min-width: 768px) {
+            .modal-input {
+                font-size: 24px;
+            }
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #5A7C49;
+        }
+
+        .change-display {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .change-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .change-amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .modal-btn-confirm {
+            background: #28a745;
+            color: white;
+        }
+
+        .modal-btn-confirm:hover {
+            background: #218838;
+        }
+
+        .modal-btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #5a6268;
+        }
+
+        .top-products {
+            margin-top: 20px;
+        }
+
+        .top-product-item {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-left: 3px solid #5A7C49;
+        }
+
+        .transactions-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .transaction-time {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .transaction-total {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .sale-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #28a745;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sale-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .sale-card.collapsed .sale-details-expand {
+            display: none;
+        }
+
+        .sale-card.collapsed .sale-arrow {
+            transform: rotate(0deg);
+        }
+
+        .sale-card .sale-details-expand {
+            display: block;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .sale-card .sale-arrow {
+            transform: rotate(180deg);
+        }
+
+        .sale-header-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sale-arrow {
+            font-size: 14px;
+            color: #5A7C49;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            width: 20px;
+        }
+
+        .sale-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .sale-id {
+            font-weight: bold;
+            color: #5A7C49;
+            font-size: 16px;
+        }
+
+        .sale-time {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .sale-payment {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .payment-card {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .payment-cash {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .sale-items {
+            margin: 15px 0;
+        }
+
+        .sale-item-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .sale-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .sale-item-name {
+            flex: 1;
+            color: #333;
+        }
+
+        .sale-item-qty {
+            color: #666;
+            margin: 0 10px;
+        }
+
+        .sale-item-price {
+            font-weight: bold;
+            color: #333;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .sale-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .sale-total-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .sale-total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .sale-details {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .no-sales {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .no-sales-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pokladna Vinotéka</h1>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showView('pos')">Pokladna</button>
+                <button class="nav-btn" onclick="showView('sales')">Prodeje</button>
+                <button class="nav-btn" onclick="showView('stats')">Statistiky</button>
+                <button class="nav-btn" onclick="showView('settings')">Nastavení</button>
+                <button class="nav-btn" id="install-btn" style="display: none; background: rgba(255,255,255,0.3);" onclick="installApp()">📱 Instalovat</button>
+            </div>
+        </div>
+
+        <!-- POS View -->
+        <div id="pos-view" class="main-content">
+            <div class="products-section" id="products-section"></div>
+            
+            <div class="cart-section">
+                <div class="cart-total">
+                    <div class="total-label">Celková cena:</div>
+                    <div class="total-amount" id="total-amount">0 Kč</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary btn-cancel-full" onclick="clearCart()">Smazat</button>
+                    <button class="btn btn-cash" onclick="payWithCash()">💵 Hotovost</button>
+                    <button class="btn btn-primary" onclick="payWithCard()">💳 Karta</button>
+                    <button class="btn btn-discount" onclick="applyCartDiscount()">% Sleva</button>
+                    <button class="btn btn-split" onclick="splitBill()">➗ Rozdělit</button>
+                </div>
+                <div class="cart-input-box">
+                    <span class="cart-label">Položky</span>
+                </div>
+                <div class="cart-items" id="cart-items"></div>
+            </div>
+        </div>
+
+        <!-- Sales View -->
+        <div id="sales-view" class="stats-section hidden">
+            <h2 style="margin-bottom: 20px;">Historie prodejů</h2>
+            <div class="stats-tabs">
+                <button class="stat-tab active" onclick="filterSales('all')">Všechny</button>
+                <button class="stat-tab" onclick="filterSales('today')">Dnes</button>
+                <button class="stat-tab" onclick="filterSales('week')">Tento týden</button>
+                <button class="stat-tab" onclick="filterSales('month')">Tento měsíc</button>
+            </div>
+            <button class="btn btn-cancel-last-sale" style="width: 100%; margin-bottom: 20px;" onclick="cancelLastSaleQuick()">Zrušit poslední obchod</button>
+            <div id="sales-list" class="stats-content"></div>
+        </div>
+
+        <!-- Stats View -->
+        <div id="stats-view" class="stats-section hidden">
+            <div class="stats-tabs">
+                <button class="stat-tab active" onclick="showStats('day')">Den</button>
+                <button class="stat-tab" onclick="showStats('month')">Měsíc</button>
+                <button class="stat-tab" onclick="showStats('year')">Rok</button>
+            </div>
+            <div class="stats-content" id="stats-content"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="export-btn" onclick="exportData()">📥 Export dat do CSV</button>
+                <button class="export-btn" style="background: #dc3545;" onmouseover="this.style.background='#c82333'" onmouseout="this.style.background='#dc3545'" onclick="cancelLastSale()">↩️ Storno poslední prodej</button>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settings-view" class="settings-section hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;">Správa produktů</h2>
+                <button class="export-btn" style="margin: 0;" onclick="showAddProductModal()">+ Přidat produkt</button>
+            </div>
+            <div class="product-list" id="product-list"></div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-title">Platba hotovostí</div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <div style="font-size: 16px; color: #666;">K úhradě:</div>
+                    <div style="font-size: 32px; font-weight: bold; color: #333;" id="modal-total">0 Kč</div>
+                </div>
+                <input type="number" id="cash-input" class="modal-input" placeholder="Zadejte částku..." autofocus>
+                <div id="change-section" class="change-display" style="display: none;">
+                    <div class="change-label">Vrátit:</div>
+                    <div class="change-amount" id="change-amount">0 Kč</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closePaymentModal()">Zrušit</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmPayment()">Potvrdit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Přidat nový produkt</div>
+            <div class="modal-body">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Název produktu:</label>
+                    <input type="text" id="new-product-name" class="modal-input" placeholder="např. Víno Chardonnay" style="font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Cena (Kč):</label>
+                    <input type="number" id="new-product-price" class="modal-input" placeholder="např. 55" style="font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Kategorie:</label>
+                    <select id="new-product-category" class="modal-input" style="font-size: 16px;">
+                        <option value="wine">Víno (1dcl)</option>
+                        <option value="wine-bottle">Víno lahve</option>
+                        <option value="coffee">Káva</option>
+                        <option value="food">Občerstvení</option>
+                        <option value="burcak">Burčák</option>
+                        <option value="degustace">Degustace</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeAddProductModal()">Zrušit</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmAddProduct()">Přidat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Split Bill Modal -->
+    <div id="split-bill-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Rozdělit účet</div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 16px; color: #666; margin-bottom: 5px;">Celková částka:</div>
+                    <div style="font-size: 32px; font-weight: bold; color: #333;" id="split-total">0 Kč</div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Počet lidí:</label>
+                    <input type="number" id="split-count" class="modal-input" placeholder="Zadejte počet..." min="2" value="2" style="font-size: 24px;">
+                </div>
+                <div id="split-result" style="display: none; background: #e8f5e9; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 16px; color: #666; margin-bottom: 5px;">Každý zaplatí:</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #28a745;" id="split-per-person">0 Kč</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeSplitBillModal()">Zrušit</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmSplitBill()">Pokračovat k platbě</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Výchozí produkty
+        const defaultProducts = [
+            { id: 1, name: 'Víno 1dcl - typ 1', price: 50, category: 'wine', categoryName: 'Víno (1dcl)' },
+            { id: 2, name: 'Víno 1dcl - typ 2', price: 55, category: 'wine', categoryName: 'Víno (1dcl)' },
+            { id: 3, name: 'Víno lahev - typ 1', price: 260, category: 'wine-bottle', categoryName: 'Víno lahve' },
+            { id: 4, name: 'Víno lahev - typ 2', price: 300, category: 'wine-bottle', categoryName: 'Víno lahve' },
+            { id: 13, name: 'Lahev vyšší třída', price: 450, category: 'wine-bottle', categoryName: 'Víno lahve' },
+            { id: 14, name: 'Frizzante', price: 240, category: 'wine-bottle', categoryName: 'Víno lahve' },
+            { id: 15, name: 'Sekt', price: 450, category: 'wine-bottle', categoryName: 'Víno lahve' },
+            { id: 5, name: 'Espresso', price: 49, category: 'coffee', categoryName: 'Káva' },
+            { id: 6, name: 'Cappuccino', price: 55, category: 'coffee', categoryName: 'Káva' },
+            { id: 7, name: 'Prkénko', price: 250, category: 'food', categoryName: 'Občerstvení' },
+            { id: 8, name: 'Škvarkovka', price: 55, category: 'food', categoryName: 'Občerstvení' },
+            { id: 9, name: 'Burčák 2dcl', price: 35, category: 'burcak', categoryName: 'Burčák' },
+            { id: 10, name: 'Burčák 1,5l', price: 150, category: 'burcak', categoryName: 'Burčák' },
+            { id: 11, name: 'Degustace velká', price: 385, category: 'degustace', categoryName: 'Degustace' },
+            { id: 12, name: 'Degustace malá', price: 285, category: 'degustace', categoryName: 'Degustace' }
+        ];
+
+        // Verze aplikace - zvyš číslo pro reset dat
+        const APP_VERSION = '1.3.2';
+        const savedVersion = localStorage.getItem('appVersion');
+
+        // Inicializace dat
+        let products;
+        let transactions;
+
+        // Pokud je nová verze nebo žádná data, načti defaultní produkty
+        if (savedVersion !== APP_VERSION || !localStorage.getItem('products')) {
+            products = [...defaultProducts];
+            transactions = [];
+            localStorage.setItem('appVersion', APP_VERSION);
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        } else {
+            products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+            transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        }
+
+        let cart = [];
+        let cartDiscount = 0; // Sleva na celý košík
+        let currentStatsView = 'day';
+        let currentSalesFilter = 'all';
+
+        // Uložení dat
+        function saveData() {
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+
+        // Zobrazení správného view
+        function showView(view) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('pos-view').classList.toggle('hidden', view !== 'pos');
+            document.getElementById('sales-view').classList.toggle('hidden', view !== 'sales');
+            document.getElementById('stats-view').classList.toggle('hidden', view !== 'stats');
+            document.getElementById('settings-view').classList.toggle('hidden', view !== 'settings');
+
+            if (view === 'sales') {
+                renderSales('all');
+            } else if (view === 'stats') {
+                showStats(currentStatsView);
+            } else if (view === 'settings') {
+                renderProductList();
+            }
+        }
+
+        // Vykreslení produktů
+        function renderProducts() {
+            const container = document.getElementById('products-section');
+            const categories = {};
+            
+            products.forEach(product => {
+                if (!categories[product.category]) {
+                    categories[product.category] = {
+                        name: product.categoryName,
+                        products: []
+                    };
+                }
+                categories[product.category].products.push(product);
+            });
+
+            container.innerHTML = Object.keys(categories).map(catKey => `
+                <div class="category">
+                    <div class="category-header category-${catKey}">${categories[catKey].name}</div>
+                    <div class="products-grid">
+                        ${categories[catKey].products.map(product => `
+                            <button class="product-btn" onclick="addToCart(${product.id})">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-price">${product.price} Kč</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Přidání do košíku
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            renderCart();
+        }
+
+        // Vykreslení košíku
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('total-amount');
+
+            if (cart.length === 0) {
+                container.innerHTML = '';
+                totalEl.textContent = '0 Kč';
+                return;
+            }
+
+            let subtotal = cart.reduce((sum, item) => {
+                const itemPrice = item.price * item.quantity;
+                const discount = item.discount || 0;
+                return sum + (itemPrice * (1 - discount / 100));
+            }, 0);
+
+            const total = subtotal * (1 - cartDiscount / 100);
+
+            container.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                const discount = item.discount || 0;
+                const finalPrice = itemTotal * (1 - discount / 100);
+                
+                return `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} Kč × ${item.quantity} ${discount ? `<span style="color: #dc3545; font-weight: bold;">(-${discount}%)</span>` : ''}</div>
+                        ${discount ? `<div style="color: #28a745; font-weight: bold; font-size: 16px;">${Math.round(finalPrice)} Kč</div>` : ''}
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <div class="qty-display">${item.quantity}</div>
+                        <button class="qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                        <button class="discount-btn" onclick="applyItemDiscount(${item.id})" title="Sleva">%</button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">×</button>
+                    </div>
+                </div>
+            `}).join('');
+
+            let totalHTML = '';
+            if (cartDiscount > 0) {
+                totalHTML = `
+                    <div style="font-size: 14px; margin-bottom: 5px;">Mezisoučet: ${Math.round(subtotal)} Kč</div>
+                    <div style="font-size: 14px; color: #dc3545; margin-bottom: 5px;">Sleva ${cartDiscount}%</div>
+                `;
+            }
+            totalHTML += `${Math.round(total)} Kč`;
+            
+            totalEl.innerHTML = totalHTML;
+        }
+
+        // Změna množství
+        function changeQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    renderCart();
+                }
+            }
+        }
+
+        // Odebrání z košíku
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            renderCart();
+        }
+
+        // Vymazání košíku
+        function clearCart() {
+            if (cart.length > 0 && confirm('Opravdu chcete zrušit celý košík?')) {
+                cart = [];
+                cartDiscount = 0;
+                renderCart();
+            }
+        }
+
+        // Sleva na položku
+        function applyItemDiscount(productId) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                const discount = prompt('Zadejte slevu v % (0-100):', item.discount || 0);
+                if (discount !== null) {
+                    const discountNum = parseInt(discount);
+                    if (!isNaN(discountNum) && discountNum >= 0 && discountNum <= 100) {
+                        item.discount = discountNum;
+                        renderCart();
+                    } else {
+                        alert('Zadejte číslo mezi 0 a 100');
+                    }
+                }
+            }
+        }
+
+        // Sleva na celý košík
+        function applyCartDiscount() {
+            if (cart.length === 0) {
+                alert('Košík je prázdný!');
+                return;
+            }
+            const discount = prompt('Zadejte slevu na celý účet v % (0-100):', cartDiscount);
+            if (discount !== null) {
+                const discountNum = parseInt(discount);
+                if (!isNaN(discountNum) && discountNum >= 0 && discountNum <= 100) {
+                    cartDiscount = discountNum;
+                    renderCart();
+                } else {
+                    alert('Zadejte číslo mezi 0 a 100');
+                }
+            }
+        }
+
+        // Rychlé zrušení posledního prodeje
+        function cancelLastSaleQuick() {
+            if (transactions.length === 0) {
+                alert('Nejsou žádné transakce ke zrušení!');
+                return;
+            }
+
+            const lastTransaction = transactions[transactions.length - 1];
+            const date = new Date(lastTransaction.timestamp);
+            const timeStr = date.toLocaleString('cs-CZ');
+            
+            // Smaž poslední transakci
+            transactions.pop();
+            saveData();
+            
+            // Překreslit seznam prodejů
+            const salesView = document.getElementById('sales-view');
+            if (salesView && !salesView.classList.contains('hidden')) {
+                renderSales(currentSalesFilter);
+            }
+            
+            // Zobrazit co bylo smazáno
+            let message = `✅ Poslední prodej byl stornován!\n\n`;
+            message += `Čas: ${timeStr}\n`;
+            message += `Částka: ${Math.round(lastTransaction.total)} Kč\n`;
+            message += `Položky: ${lastTransaction.items.map(i => `${i.quantity}× ${i.name}`).join(', ')}`;
+            
+            alert(message);
+        }
+
+        // Rozdělit účet
+        function splitBill() {
+            if (cart.length === 0) {
+                alert('Košík je prázdný!');
+                return;
+            }
+
+            const total = getCartTotal();
+            document.getElementById('split-total').textContent = `${Math.round(total)} Kč`;
+            document.getElementById('split-count').value = '2';
+            document.getElementById('split-result').style.display = 'none';
+            document.getElementById('split-bill-modal').classList.add('show');
+            
+            setTimeout(() => {
+                document.getElementById('split-count').focus();
+                document.getElementById('split-count').select();
+            }, 100);
+        }
+
+        // Zavření modalu rozdělení účtu
+        function closeSplitBillModal() {
+            document.getElementById('split-bill-modal').classList.remove('show');
+        }
+
+        // Výpočet rozdělení
+        document.addEventListener('DOMContentLoaded', function() {
+            const splitInput = document.getElementById('split-count');
+            if (splitInput) {
+                splitInput.addEventListener('input', function() {
+                    const total = getCartTotal();
+                    const count = parseInt(this.value) || 0;
+                    
+                    if (count >= 2) {
+                        const perPerson = total / count;
+                        document.getElementById('split-result').style.display = 'block';
+                        document.getElementById('split-per-person').textContent = `${Math.round(perPerson)} Kč`;
+                    } else {
+                        document.getElementById('split-result').style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Potvrzení rozdělení účtu
+        function confirmSplitBill() {
+            const count = parseInt(document.getElementById('split-count').value);
+            
+            if (!count || count < 2) {
+                alert('Zadejte platný počet lidí (minimálně 2)!');
+                return;
+            }
+
+            const total = getCartTotal();
+            const perPerson = Math.round(total / count);
+            
+            closeSplitBillModal();
+            
+            // Zobrazit info a pokračovat k platbě
+            if (confirm(`Účet rozdělen mezi ${count} lidí.\nKaždý zaplatí: ${perPerson} Kč\n\nPokračovat k platbě?`)) {
+                // Můžeš si vybrat platbu
+                alert(`Nyní můžete vybrat způsob platby.\n\nCelkem: ${Math.round(total)} Kč\nNa osobu: ${perPerson} Kč`);
+            }
+        }
+
+        // Platba kartou
+        function payWithCard() {
+            if (cart.length === 0) {
+                alert('Košík je prázdný!');
+                return;
+            }
+            completeSale('Karta');
+        }
+
+        // Platba hotovostí
+        function payWithCash() {
+            if (cart.length === 0) {
+                alert('Košík je prázdný!');
+                return;
+            }
+
+            const total = getCartTotal();
+            document.getElementById('modal-total').textContent = `${Math.round(total)} Kč`;
+            document.getElementById('cash-input').value = '';
+            document.getElementById('change-section').style.display = 'none';
+            document.getElementById('payment-modal').classList.add('show');
+            
+            setTimeout(() => {
+                document.getElementById('cash-input').focus();
+            }, 100);
+        }
+
+        // Výpočet celkové ceny košíku
+        function getCartTotal() {
+            let subtotal = cart.reduce((sum, item) => {
+                const itemPrice = item.price * item.quantity;
+                const discount = item.discount || 0;
+                return sum + (itemPrice * (1 - discount / 100));
+            }, 0);
+            return subtotal * (1 - cartDiscount / 100);
+        }
+
+        // Výpočet vrácení
+        document.addEventListener('DOMContentLoaded', function() {
+            const cashInput = document.getElementById('cash-input');
+            if (cashInput) {
+                cashInput.addEventListener('input', function() {
+                    const total = getCartTotal();
+                    const received = parseFloat(this.value) || 0;
+                    const change = received - total;
+                    
+                    if (received >= total && received > 0) {
+                        document.getElementById('change-section').style.display = 'block';
+                        document.getElementById('change-amount').textContent = `${Math.round(change)} Kč`;
+                    } else {
+                        document.getElementById('change-section').style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Zavření modalu
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('show');
+        }
+
+        // Potvrzení platby
+        function confirmPayment() {
+            const total = getCartTotal();
+            const received = parseFloat(document.getElementById('cash-input').value) || 0;
+            
+            if (received < total) {
+                alert('Zadaná částka je nižší než celková cena!');
+                return;
+            }
+
+            completeSale('Hotovost', received);
+            closePaymentModal();
+        }
+
+        // Dokončení prodeje
+        function completeSale(paymentMethod, cashReceived = null) {
+            if (cart.length === 0) {
+                alert('Košík je prázdný!');
+                return;
+            }
+
+            const total = getCartTotal();
+            const transaction = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                items: cart.map(item => ({
+                    ...item,
+                    finalPrice: item.price * item.quantity * (1 - (item.discount || 0) / 100)
+                })),
+                subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity * (1 - (item.discount || 0) / 100), 0),
+                cartDiscount: cartDiscount,
+                total: total,
+                paymentMethod: paymentMethod,
+                cashReceived: cashReceived,
+                change: cashReceived ? cashReceived - total : 0
+            };
+
+            transactions.push(transaction);
+            saveData();
+            
+            let message = `Prodej dokončen!\n\n`;
+            message += `Způsob platby: ${paymentMethod}\n`;
+            message += `Celkem: ${Math.round(total)} Kč\n`;
+            if (cashReceived) {
+                message += `Přijato: ${Math.round(cashReceived)} Kč\n`;
+                message += `Vrátit: ${Math.round(cashReceived - total)} Kč`;
+            }
+            
+            alert(message);
+            cart = [];
+            cartDiscount = 0;
+            renderCart();
+        }
+
+        // Vykreslení prodejů
+        function renderSales(filter) {
+            currentSalesFilter = filter;
+            const container = document.getElementById('sales-list');
+            
+            if (transactions.length === 0) {
+                container.innerHTML = `
+                    <div class="no-sales">
+                        <div class="no-sales-icon">📦</div>
+                        <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">Zatím žádné prodeje</div>
+                        <div>Prodeje se objeví po dokončení první transakce</div>
+                    </div>
+                `;
+                return;
+            }
+
+            const now = new Date();
+            let filteredTransactions = [...transactions];
+
+            if (filter === 'today') {
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= today);
+            } else if (filter === 'week') {
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay());
+                weekStart.setHours(0, 0, 0, 0);
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= weekStart);
+            } else if (filter === 'month') {
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= monthStart);
+            }
+
+            if (filteredTransactions.length === 0) {
+                container.innerHTML = `
+                    <div class="no-sales">
+                        <div class="no-sales-icon">🔍</div>
+                        <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">Žádné prodeje v tomto období</div>
+                        <div>Zkuste jiný časový filtr</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Zobrazit od nejnovějších
+            const sortedTransactions = filteredTransactions.reverse();
+
+            container.innerHTML = sortedTransactions.map((transaction, index) => {
+                const date = new Date(transaction.timestamp);
+                const dateStr = date.toLocaleDateString('cs-CZ', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric' 
+                });
+                const timeStr = date.toLocaleTimeString('cs-CZ', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                // Generate date-based ID: DDMMYYYY####
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                const sequenceNum = String(filteredTransactions.length - index).padStart(4, '0');
+                const displayId = `${day}${month}${year}${sequenceNum}`;
+
+                const paymentClass = transaction.paymentMethod === 'Karta' ? 'payment-card' : 'payment-cash';
+                const paymentIcon = transaction.paymentMethod === 'Karta' ? '💳' : '💵';
+
+                return `
+                    <div class="sale-card collapsed" id="sale-${transaction.id}">
+                        <div class="sale-header-compact" onclick="toggleSale(${transaction.id})">
+                            <div class="sale-arrow">▼</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: bold; color: #333; margin-bottom: 3px;">#${displayId}</div>
+                                <div style="font-size: 13px; color: #666;">${dateStr} ${timeStr}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 20px; font-weight: bold; color: #28a745;">${Math.round(transaction.total)} Kč</div>
+                                <div class="sale-payment ${paymentClass}" style="margin-top: 5px;">
+                                    ${paymentIcon} ${transaction.paymentMethod}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sale-details-expand">
+                            <div class="sale-items">
+                                ${transaction.items.map(item => `
+                                    <div class="sale-item-row">
+                                        <div class="sale-item-name">${item.name}</div>
+                                        <div class="sale-item-qty">${item.quantity}×</div>
+                                        <div class="sale-item-price">${Math.round(item.finalPrice || item.price * item.quantity)} Kč</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            ${transaction.cartDiscount > 0 || transaction.cashReceived ? `
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+                                    ${transaction.cartDiscount > 0 ? `
+                                        <div class="sale-details">Sleva na účet: ${transaction.cartDiscount}%</div>
+                                    ` : ''}
+                                    ${transaction.cashReceived ? `
+                                        <div class="sale-details">Přijato: ${Math.round(transaction.cashReceived)} Kč | Vráceno: ${Math.round(transaction.change)} Kč</div>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filtrování prodejů
+        function filterSales(filter) {
+            document.querySelectorAll('#sales-view .stat-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderSales(filter);
+        }
+
+        // Rozbalení/sbalení prodeje
+        function toggleSale(transactionId) {
+            const card = document.getElementById(`sale-${transactionId}`);
+            card.classList.toggle('collapsed');
+        }
+
+        // Zobrazení statistik
+        function showStats(period) {
+            currentStatsView = period;
+            document.querySelectorAll('.stat-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const now = new Date();
+            let filteredTransactions = [];
+
+            if (period === 'day') {
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= today);
+            } else if (period === 'month') {
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= monthStart);
+            } else {
+                const yearStart = new Date(now.getFullYear(), 0, 1);
+                filteredTransactions = transactions.filter(t => new Date(t.timestamp) >= yearStart);
+            }
+
+            const totalRevenue = filteredTransactions.reduce((sum, t) => sum + t.total, 0);
+            const totalTransactions = filteredTransactions.length;
+            const avgTransaction = totalTransactions > 0 ? Math.round(totalRevenue / totalTransactions) : 0;
+
+            // Nejprodávanější produkty
+            const productStats = {};
+            filteredTransactions.forEach(t => {
+                t.items.forEach(item => {
+                    if (!productStats[item.id]) {
+                        productStats[item.id] = { name: item.name, quantity: 0, revenue: 0 };
+                    }
+                    productStats[item.id].quantity += item.quantity;
+                    productStats[item.id].revenue += item.price * item.quantity;
+                });
+            });
+
+            const topProducts = Object.values(productStats)
+                .sort((a, b) => b.quantity - a.quantity)
+                .slice(0, 5);
+
+            const periodName = { day: 'dnes', month: 'tento měsíc', year: 'letos' }[period];
+
+            // Count degustace
+            let degustaceVelka = 0;
+            let degustaceMala = 0;
+            filteredTransactions.forEach(t => {
+                t.items.forEach(item => {
+                    if (item.name.toLowerCase().includes('degustace velká')) {
+                        degustaceVelka += item.quantity;
+                    } else if (item.name.toLowerCase().includes('degustace malá')) {
+                        degustaceMala += item.quantity;
+                    }
+                });
+            });
+
+            document.getElementById('stats-content').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-label">Celkový obrat ${periodName}</div>
+                    <div class="stat-value">${totalRevenue} Kč</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Počet transakcí</div>
+                    <div class="stat-value">${totalTransactions}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Průměrná transakce</div>
+                    <div class="stat-value">${avgTransaction} Kč</div>
+                </div>
+                <div class="top-products">
+                    <h3 style="margin-bottom: 15px;">🍷 Degustace</h3>
+                    <div class="top-product-item">
+                        <div>
+                            <strong>Malé</strong>
+                        </div>
+                        <strong>${degustaceMala}×</strong>
+                    </div>
+                    <div class="top-product-item">
+                        <div>
+                            <strong>Velké</strong>
+                        </div>
+                        <strong>${degustaceVelka}×</strong>
+                    </div>
+                </div>
+                ${topProducts.length > 0 ? `
+                    <div class="top-products">
+                        <h3 style="margin-bottom: 15px;">🏆 Nejprodávanější produkty</h3>
+                        ${topProducts.map((p, i) => `
+                            <div class="top-product-item">
+                                <div>
+                                    <strong>${i + 1}. ${p.name}</strong><br>
+                                    <small>${p.quantity}× prodáno</small>
+                                </div>
+                                <strong>${p.revenue} Kč</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        // Zobrazení modalu pro přidání produktu
+        function showAddProductModal() {
+            document.getElementById('new-product-name').value = '';
+            document.getElementById('new-product-price').value = '';
+            document.getElementById('new-product-category').value = 'wine';
+            document.getElementById('add-product-modal').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('new-product-name').focus();
+            }, 100);
+        }
+
+        // Zavření modalu pro přidání produktu
+        function closeAddProductModal() {
+            document.getElementById('add-product-modal').classList.remove('show');
+        }
+
+        // Potvrzení přidání produktu
+        function confirmAddProduct() {
+            const name = document.getElementById('new-product-name').value.trim();
+            const price = parseInt(document.getElementById('new-product-price').value);
+            const category = document.getElementById('new-product-category').value;
+
+            if (!name) {
+                alert('Zadejte název produktu!');
+                return;
+            }
+
+            if (!price || price <= 0) {
+                alert('Zadejte platnou cenu!');
+                return;
+            }
+
+            const categoryNames = {
+                'wine': 'Víno (1dcl)',
+                'wine-bottle': 'Víno lahve',
+                'coffee': 'Káva',
+                'food': 'Občerstvení',
+                'burcak': 'Burčák',
+                'degustace': 'Degustace'
+            };
+
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                category: category,
+                categoryName: categoryNames[category]
+            };
+
+            products.push(newProduct);
+            saveData();
+            renderProducts(); // OPRAVA: Překreslit pokladnu hned
+            renderProductList();
+            closeAddProductModal();
+            alert('Produkt byl přidán!');
+        }
+
+        // Vykreslení seznamu produktů pro úpravu
+        function renderProductList() {
+            const container = document.getElementById('product-list');
+            container.innerHTML = products.map(product => `
+                <div class="product-item" id="product-${product.id}">
+                    <div class="product-item-header">
+                        <div class="product-item-name">${product.name} - ${product.price} Kč</div>
+                        <div class="product-item-controls">
+                            <button class="edit-btn" onclick="editProduct(${product.id})">Upravit</button>
+                            <button class="remove-btn" onclick="deleteProduct(${product.id})">Smazat</button>
+                        </div>
+                    </div>
+                    <div class="edit-fields hidden" id="edit-${product.id}">
+                        <input type="text" id="name-${product.id}" value="${product.name}" placeholder="Název produktu">
+                        <input type="number" id="price-${product.id}" value="${product.price}" placeholder="Cena">
+                        <button class="save-btn" onclick="saveProduct(${product.id})">Uložit</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Úprava produktu
+        function editProduct(productId) {
+            document.getElementById(`edit-${productId}`).classList.remove('hidden');
+        }
+
+        // Uložení upraveného produktu
+        function saveProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            const newName = document.getElementById(`name-${productId}`).value;
+            const newPrice = parseInt(document.getElementById(`price-${productId}`).value);
+
+            if (newName && newPrice > 0) {
+                product.name = newName;
+                product.price = newPrice;
+                saveData();
+                renderProducts();
+                renderProductList();
+                alert('Produkt byl upraven!');
+            } else {
+                alert('Vyplňte všechna pole správně!');
+            }
+        }
+
+        // Smazání produktu
+        function deleteProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (confirm(`Opravdu chcete smazat produkt "${product.name}"?`)) {
+                products = products.filter(p => p.id !== productId);
+                saveData();
+                renderProducts();
+                renderProductList();
+                alert('Produkt byl smazán!');
+            }
+        }
+
+        // Storno posledního prodeje
+        function cancelLastSale() {
+            if (transactions.length === 0) {
+                alert('Nejsou žádné transakce ke stornování!');
+                return;
+            }
+
+            const lastTransaction = transactions[transactions.length - 1];
+            const timeAgo = Math.round((Date.now() - new Date(lastTransaction.timestamp).getTime()) / 60000);
+            
+            let message = `Stornovat poslední prodej?\n\n`;
+            message += `Čas: před ${timeAgo} minutami\n`;
+            message += `Částka: ${Math.round(lastTransaction.total)} Kč\n`;
+            message += `Položky: ${lastTransaction.items.map(i => `${i.quantity}× ${i.name}`).join(', ')}`;
+
+            if (confirm(message)) {
+                transactions.pop();
+                saveData();
+                alert('Prodej byl stornován!');
+                showStats(currentStatsView);
+            }
+        }
+
+        // Export dat do CSV
+        function exportData() {
+            let csv = 'Datum a čas,Produkty,Celkem\n';
+            transactions.forEach(t => {
+                const date = new Date(t.timestamp).toLocaleString('cs-CZ');
+                const items = t.items.map(i => `${i.quantity}x ${i.name}`).join('; ');
+                csv += `"${date}","${items}",${t.total}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `transakce_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        // Inicializace
+        renderProducts();
+        renderCart();
+
+        // PWA Install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-btn').style.display = 'block';
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('install-btn').style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // Fallback instrukce
+                alert('📱 Jak nainstalovat:\n\nChrome: Menu (⋮) → "Přidat na plochu"\n\nSafari: Sdílet → "Na plochu"');
+            }
+        }
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,Ly8gU2ltcGxlIHNlcnZpY2Ugd29ya2VyIGZvciBvZmZsaW5lIHN1cHBvcnQKY29uc3QgQ0FDSEVfTkFNRSA9ICdvbGl2ZWEtdjEnOwpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2luc3RhbGwnLCAoZSkgPT4gewogIGUud2FpdFVudGlsKAogICAgY2FjaGVzLm9wZW4oQ0FDSEVfTkFNRSkudGhlbigoY2FjaGUpID0+IHsKICAgICAgcmV0dXJuIGNhY2hlLmFkZEFsbChbJy4vJ10pOwogICAgfSkKICApOwp9KTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChlKSA9PiB7CiAgZS5yZXNwb25kV2l0aCgKICAgIGNhY2hlcy5tYXRjaChlLnJlcXVlc3QpLnRoZW4oKHJlc3BvbnNlKSA9PiB7CiAgICAgIHJldHVybiByZXNwb25zZSB8fCBmZXRjaChlLnJlcXVlc3QpOwogICAgfSkKICApOwp9KTs=')
+                .then(() => console.log('PWA ready'))
+                .catch(() => {});
+        }
+    </script>
+</body>
+</html>
