@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#5A7C49">
-    <meta name="apple-mobile-web-app-title" content="Olivea Mikulov">
+    <meta name="apple-mobile-web-app-title" content="Pokladna">
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9saXZlYSBNaWt1bG92IC0gUG9rbGFkbmEiLAogICJzaG9ydF9uYW1lIjogIk9saXZlYSIsCiAgImRlc2NyaXB0aW9uIjogIlBva2xhZG7DrSBzeXN0w6ltIHBybyBPbGl2ZWEgTWlrdWxvdiIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2Y1ZjVmNSIsCiAgInRoZW1lX2NvbG9yIjogIiM1QTdDNDkiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjM1QTdDNDknLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjNlbScgZmlsbD0nd2hpdGUnJTNF8J+Ntwolm0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
-    <title>Olivea Mikulov - Pokladna</title>
+    <title>Pokladna</title>
     <style>
         * {
             margin: 0;
@@ -332,12 +332,31 @@
 
         .cart-items {
             flex: 1;
-            overflow-y: auto;
+            overflow-y: scroll;
             overflow-x: hidden;
             max-height: 400px;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
             touch-action: pan-y;
+        }
+
+        /* Force scrollbar to be visible */
+        .cart-items::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-items::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .cart-items::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         @media (min-width: 768px) {
@@ -1256,8 +1275,9 @@
     <script>
         // Výchozí produkty
         const defaultProducts = [
-            { id: 1, name: 'Víno 1dcl - typ 1', price: 50, category: 'wine', categoryName: 'Víno (1dcl)' },
-            { id: 2, name: 'Víno 1dcl - typ 2', price: 55, category: 'wine', categoryName: 'Víno (1dcl)' },
+            { id: 1, name: 'Víno 1dcl', price: 50, category: 'wine', categoryName: 'Víno (1dcl)' },
+            { id: 2, name: 'Víno 1dcl', price: 55, category: 'wine', categoryName: 'Víno (1dcl)' },
+            { id: 16, name: 'Víno 1dcl', price: 60, category: 'wine', categoryName: 'Víno (1dcl)' },
             { id: 3, name: 'Víno lahev - typ 1', price: 260, category: 'wine-bottle', categoryName: 'Víno lahve' },
             { id: 4, name: 'Víno lahev - typ 2', price: 300, category: 'wine-bottle', categoryName: 'Víno lahve' },
             { id: 13, name: 'Lahev vyšší třída', price: 450, category: 'wine-bottle', categoryName: 'Víno lahve' },
@@ -1274,7 +1294,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.3';
+        const APP_VERSION = '1.3.4';
         const savedVersion = localStorage.getItem('appVersion');
 
         // Inicializace dat
