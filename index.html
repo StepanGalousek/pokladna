@@ -133,8 +133,12 @@
             flex-direction: column;
             gap: 20px;
             overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
+            /* Firefox specific scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
         }
 
         .category {
@@ -345,9 +349,12 @@
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
             touch-action: pan-y;
+            /* Firefox specific scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
         }
 
-        /* Force scrollbar to be visible */
+        /* Webkit scrollbar (Chrome/Safari) */
         .cart-items::-webkit-scrollbar {
             width: 8px;
         }
@@ -1197,6 +1204,12 @@
                 <button class="export-btn" style="margin: 0;" onclick="showAddProductModal()">+ Přidat produkt</button>
             </div>
             <div class="product-list" id="product-list"></div>
+            
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd;">
+                <h3 style="margin-bottom: 15px; color: #dc3545;">⚠️ Nebezpečná zóna</h3>
+                <p style="color: #666; margin-bottom: 15px;">Reset vymaže všechny prodeje a vrátí produkty na výchozí nastavení.</p>
+                <button class="btn" style="width: 100%; background: #dc3545; color: white; padding: 15px; font-size: 16px; font-weight: bold;" onclick="resetApplication()">🔄 Resetovat aplikaci</button>
+            </div>
         </div>
     </div>
 
@@ -1301,8 +1314,15 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.4';
+        const APP_VERSION = '1.3.5-firefox';
         const savedVersion = localStorage.getItem('appVersion');
+        
+        // Detekce prohlížeče a debug info
+        const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        console.log('🦊 Prohlížeč:', isFirefox ? 'Firefox' : 'Jiný');
+        console.log('📦 Verze aplikace:', APP_VERSION);
+        console.log('💾 Uložená verze:', savedVersion);
+        console.log('📊 Počet transakcí:', localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')).length : 0);
 
         // Inicializace dat
         let products;
@@ -2139,6 +2159,30 @@
             link.href = URL.createObjectURL(blob);
             link.download = `transakce_${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
+        }
+
+        // Reset aplikace - vymaže vše a reload
+        function resetApplication() {
+            const confirmed = confirm(
+                '⚠️ VAROVÁNÍ ⚠️\n\n' +
+                'Tímto vymažete:\n' +
+                '• Všechny prodeje\n' +
+                '• Všechny změny produktů\n' +
+                '• Veškerá data\n\n' +
+                'Produkty se vrátí na výchozí nastavení.\n\n' +
+                'Opravdu chcete pokračovat?'
+            );
+            
+            if (confirmed) {
+                // Vymaž localStorage
+                localStorage.clear();
+                
+                // Zobraz potvrzení
+                alert('✅ Aplikace byla resetována!\n\nStránka se nyní znovu načte.');
+                
+                // Reload stránky
+                window.location.reload(true);
+            }
         }
 
         // Inicializace
