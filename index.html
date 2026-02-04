@@ -122,7 +122,7 @@
         @media (min-width: 1024px) {
             .main-content {
                 display: grid;
-                grid-template-columns: 2fr 1fr;
+                grid-template-columns: 1.5fr 1fr;
                 gap: 20px;
                 padding: 20px;
             }
@@ -187,14 +187,15 @@
 
         @media (min-width: 768px) {
             .products-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
         }
 
         @media (min-width: 1200px) {
             .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
             }
         }
 
@@ -245,6 +246,55 @@
             }
         }
 
+        .product-with-switch {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .product-with-switch .product-btn {
+            width: 100%;
+        }
+
+        .size-switch {
+            display: flex;
+            gap: 5px;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .size-btn {
+            flex: 1;
+            background: white;
+            border: 2px solid #ddd;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.2s;
+            touch-action: manipulation;
+            color: #333;
+        }
+
+        @media (min-width: 768px) {
+            .size-btn {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        .size-btn:active {
+            background: #5A7C49;
+            color: white;
+            border-color: #5A7C49;
+        }
+
+        .size-btn:hover {
+            border-color: #5A7C49;
+        }
+
         .cart-section {
             background: #f9f9f9;
             padding: 15px;
@@ -283,14 +333,22 @@
         .cart-items {
             flex: 1;
             overflow-y: auto;
-            max-height: 300px;
+            overflow-x: hidden;
+            max-height: 400px;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
+            touch-action: pan-y;
         }
 
         @media (min-width: 768px) {
             .cart-items {
-                max-height: 400px;
+                max-height: 500px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .cart-items {
+                max-height: 600px;
             }
         }
 
@@ -1216,7 +1274,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.2';
+        const APP_VERSION = '1.3.3';
         const savedVersion = localStorage.getItem('appVersion');
 
         // Inicializace dat
@@ -1284,12 +1342,30 @@
                 <div class="category">
                     <div class="category-header category-${catKey}">${categories[catKey].name}</div>
                     <div class="products-grid">
-                        ${categories[catKey].products.map(product => `
-                            <button class="product-btn" onclick="addToCart(${product.id})">
-                                <div class="product-name">${product.name}</div>
-                                <div class="product-price">${product.price} Kč</div>
-                            </button>
-                        `).join('')}
+                        ${categories[catKey].products.map(product => {
+                            // Speciální handling pro víno 1dcl - přidat switch
+                            if (catKey === 'wine') {
+                                return `
+                                    <div class="product-with-switch">
+                                        <button class="product-btn" onclick="addToCartWithSize(${product.id}, '1dcl')">
+                                            <div class="product-name">${product.name}</div>
+                                            <div class="product-price">${product.price} Kč</div>
+                                        </button>
+                                        <div class="size-switch">
+                                            <button class="size-btn active" onclick="event.stopPropagation(); addToCartWithSize(${product.id}, '1dcl')">1dcl</button>
+                                            <button class="size-btn" onclick="event.stopPropagation(); addToCartWithSize(${product.id}, '2dcl')">2dcl</button>
+                                        </div>
+                                    </div>
+                                `;
+                            } else {
+                                return `
+                                    <button class="product-btn" onclick="addToCart(${product.id})">
+                                        <div class="product-name">${product.name}</div>
+                                        <div class="product-price">${product.price} Kč</div>
+                                    </button>
+                                `;
+                            }
+                        }).join('')}
                     </div>
                 </div>
             `).join('');
@@ -1298,12 +1374,40 @@
         // Přidání do košíku
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
+            const existingItem = cart.find(item => item.id === productId && !item.size);
 
             if (existingItem) {
                 existingItem.quantity++;
             } else {
                 cart.push({ ...product, quantity: 1 });
+            }
+
+            renderCart();
+        }
+
+        // Přidání do košíku s velikostí (pro víno 1dcl/2dcl)
+        function addToCartWithSize(productId, size) {
+            const product = products.find(p => p.id === productId);
+            const multiplier = size === '2dcl' ? 2 : 1;
+            const finalPrice = product.price * multiplier;
+            const displayName = size === '2dcl' ? `${product.name} (2dcl)` : product.name;
+            
+            // Hledej existující položku se stejnou velikostí
+            const existingItem = cart.find(item => 
+                item.id === productId && 
+                item.size === size
+            );
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ 
+                    ...product, 
+                    name: displayName,
+                    price: finalPrice,
+                    size: size,
+                    quantity: 1 
+                });
             }
 
             renderCart();
