@@ -1041,6 +1041,23 @@
             background: #5a6268;
         }
 
+        .discount-quick-btn {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background: #5A7C49;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .discount-quick-btn:active {
+            transform: scale(0.95);
+            background: #4a6339;
+        }
+
         .top-products {
             margin-top: 20px;
         }
@@ -1406,6 +1423,26 @@
         </div>
     </div>
 
+    <!-- Discount Modal -->
+    <div id="discount-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Sleva na účet</div>
+            <div class="modal-body">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                    <button class="discount-quick-btn" onclick="applyQuickDiscount(5)">5%</button>
+                    <button class="discount-quick-btn" onclick="applyQuickDiscount(10)">10%</button>
+                    <button class="discount-quick-btn" onclick="applyQuickDiscount(15)">15%</button>
+                    <button class="discount-quick-btn" onclick="applyQuickDiscount(20)">20%</button>
+                    <button class="discount-quick-btn" onclick="applyQuickDiscount(25)">25%</button>
+                    <button class="discount-quick-btn" onclick="clearCartDiscount()" style="background: #E87C87; grid-column: 1 / -1;">Zrušit slevy</button>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeDiscountModal()">Zavřít</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Výchozí produkty
         const defaultProducts = [
@@ -1701,16 +1738,27 @@
                 alert('Košík je prázdný!');
                 return;
             }
-            const discount = prompt('Zadejte slevu na celý účet v % (0-100):', cartDiscount);
-            if (discount !== null) {
-                const discountNum = parseInt(discount);
-                if (!isNaN(discountNum) && discountNum >= 0 && discountNum <= 100) {
-                    cartDiscount = discountNum;
-                    renderCart();
-                } else {
-                    alert('Zadejte číslo mezi 0 a 100');
-                }
-            }
+            document.getElementById('discount-modal').classList.add('show');
+        }
+
+        function closeDiscountModal() {
+            document.getElementById('discount-modal').classList.remove('show');
+        }
+
+        function applyQuickDiscount(percent) {
+            cartDiscount = percent;
+            renderCart();
+            closeDiscountModal();
+        }
+
+        function clearCartDiscount() {
+            cartDiscount = 0;
+            // Zrušit i slevy na jednotlivých položkách
+            cart.forEach(item => {
+                item.discount = 0;
+            });
+            renderCart();
+            closeDiscountModal();
         }
 
         // Rychlé zrušení posledního prodeje
