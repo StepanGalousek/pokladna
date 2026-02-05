@@ -472,7 +472,34 @@
         }
 
         .cart-items-wrapper {
-            /* Jen container, žádný scroll */
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            /* Firefox scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        /* Webkit scrollbar for items wrapper */
+        .cart-items-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .cart-items {
@@ -486,12 +513,6 @@
             font-weight: bold;
             margin-bottom: 15px;
             color: #333;
-        }
-
-        @media (min-width: 768px) {
-            .cart-items {
-                max-height: 400px;
-            }
         }
 
         .cart-item {
@@ -1434,7 +1455,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.9-scroll-fix';
+        const APP_VERSION = '1.4.0-final';
         const savedVersion = localStorage.getItem('appVersion');
         
         // Detekce prohlížeče a debug info
