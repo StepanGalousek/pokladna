@@ -375,13 +375,13 @@
 
         .cart-section {
             background: #f9f9f9;
-            padding: 12px;
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            padding: 10px;
+            padding-bottom: 60px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: calc(100vh - 130px);
+            gap: 10px;
+            max-height: calc(100vh - 180px);
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
@@ -412,25 +412,25 @@
 
         @media (min-width: 768px) {
             .cart-section {
-                padding: 15px;
-                padding-bottom: max(15px, env(safe-area-inset-bottom));
-                max-height: calc(100vh - 130px);
+                padding: 12px;
+                padding-bottom: 60px;
+                max-height: calc(100vh - 180px);
             }
         }
 
         @media (min-width: 1024px) {
             .cart-section {
                 padding: 15px;
-                padding-bottom: max(15px, env(safe-area-inset-bottom));
-                max-height: calc(100vh - 140px);
+                padding-bottom: 60px;
+                max-height: calc(100vh - 180px);
             }
         }
 
         @media (min-width: 1200px) {
             .cart-section {
-                padding: 20px;
-                padding-bottom: max(20px, env(safe-area-inset-bottom));
-                max-height: calc(100vh - 150px);
+                padding: 15px;
+                padding-bottom: 60px;
+                max-height: calc(100vh - 180px);
             }
         }
 
@@ -455,33 +455,9 @@
         }
 
         .cart-items {
-            flex: 1;
-            overflow-y: visible;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            /* Firefox specific scrollbar */
-            scrollbar-width: thin;
-            scrollbar-color: #888 #f1f1f1;
-        }
-
-        /* Webkit scrollbar (Chrome/Safari) */
-        .cart-items::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .cart-items::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .cart-items::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        .cart-items::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .cart-header {
@@ -755,14 +731,17 @@
 
         .stats-section, .settings-section {
             padding: 15px;
+            padding-bottom: 60px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             height: 100%;
+            max-height: calc(100vh - 100px);
         }
 
         @media (min-width: 768px) {
             .stats-section, .settings-section {
                 padding: 20px;
+                padding-bottom: 60px;
             }
         }
 
@@ -1432,7 +1411,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.7-android-safe';
+        const APP_VERSION = '1.3.8-navfix';
         const savedVersion = localStorage.getItem('appVersion');
         
         // Detekce prohlížeče a debug info
@@ -1441,6 +1420,11 @@
         console.log('📦 Verze aplikace:', APP_VERSION);
         console.log('💾 Uložená verze:', savedVersion);
         console.log('📊 Počet transakcí:', localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')).length : 0);
+        console.log('📏 Viewport výška:', window.innerHeight, 'px');
+        console.log('📏 Viewport šířka:', window.innerWidth, 'px');
+        console.log('📏 Screen výška:', window.screen.height, 'px');
+        console.log('📏 Dostupná výška:', window.screen.availHeight, 'px');
+        console.log('📏 Rozdíl (nav bar):', window.screen.height - window.innerHeight, 'px');
 
         // Inicializace dat
         let products;
