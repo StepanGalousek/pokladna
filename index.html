@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
@@ -376,32 +376,61 @@
         .cart-section {
             background: #f9f9f9;
             padding: 12px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: calc(100vh - 100px);
+            max-height: calc(100vh - 130px);
             overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            /* Firefox scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        /* Webkit scrollbar for cart-section */
+        .cart-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-section::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .cart-section::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         @media (min-width: 768px) {
             .cart-section {
                 padding: 15px;
-                max-height: calc(100vh - 80px);
+                padding-bottom: max(15px, env(safe-area-inset-bottom));
+                max-height: calc(100vh - 130px);
             }
         }
 
         @media (min-width: 1024px) {
             .cart-section {
                 padding: 15px;
-                max-height: calc(100vh - 90px);
+                padding-bottom: max(15px, env(safe-area-inset-bottom));
+                max-height: calc(100vh - 140px);
             }
         }
 
         @media (min-width: 1200px) {
             .cart-section {
                 padding: 20px;
-                max-height: calc(100vh - 100px);
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+                max-height: calc(100vh - 150px);
             }
         }
 
@@ -427,12 +456,10 @@
 
         .cart-items {
             flex: 1;
-            overflow-y: scroll;
+            overflow-y: visible;
             overflow-x: hidden;
-            max-height: 180px;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
-            touch-action: pan-y;
             /* Firefox specific scrollbar */
             scrollbar-width: thin;
             scrollbar-color: #888 #f1f1f1;
@@ -455,24 +482,6 @@
 
         .cart-items::-webkit-scrollbar-thumb:hover {
             background: #555;
-        }
-
-        @media (min-width: 768px) {
-            .cart-items {
-                max-height: 250px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .cart-items {
-                max-height: 350px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .cart-items {
-                max-height: 400px;
-            }
         }
 
         .cart-header {
@@ -629,6 +638,14 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
+            padding-bottom: max(0px, calc(env(safe-area-inset-bottom) - 12px));
+        }
+
+        @media (min-width: 1024px) {
+            .action-buttons {
+                gap: 12px;
+                padding-bottom: max(0px, calc(env(safe-area-inset-bottom) - 15px));
+            }
         }
 
         .btn-cancel-full {
@@ -1415,7 +1432,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.6-tabm11';
+        const APP_VERSION = '1.3.7-android-safe';
         const savedVersion = localStorage.getItem('appVersion');
         
         // Detekce prohlížeče a debug info
