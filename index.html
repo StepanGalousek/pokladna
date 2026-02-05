@@ -46,68 +46,135 @@
         .header {
             background: linear-gradient(135deg, #5A7C49 0%, #4a6339 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 8px 12px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .header h1 {
-            font-size: 20px;
-            margin: 0;
         }
 
         @media (min-width: 768px) {
             .header {
-                padding: 20px 30px;
-            }
-            
-            .header h1 {
-                font-size: 28px;
+                padding: 10px 15px;
             }
         }
 
-        .nav-buttons {
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
             display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            width: 100%;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger-btn span {
+            width: 24px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        @media (min-width: 768px) {
+            .hamburger-btn span {
+                width: 26px;
+            }
+        }
+
+        .hamburger-btn:active span {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            transition: left 0.3s ease;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-menu.open {
+            left: 0;
+        }
+
+        .slide-menu-header {
+            background: linear-gradient(135deg, #5A7C49 0%, #4a6339 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slide-menu-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
 
-        @media (min-width: 768px) {
-            .nav-buttons {
-                gap: 10px;
-                width: auto;
-            }
+        .nav-buttons-vertical {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
         }
 
-        .nav-btn {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-            flex: 1 1 auto;
-            min-width: fit-content;
-            white-space: nowrap;
-        }
-
-        @media (min-width: 768px) {
-            .nav-btn {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
-        }
-
-        .nav-btn:hover, .nav-btn.active {
+        .nav-btn-vertical {
             background: white;
-            color: #667eea;
+            border: none;
+            color: #333;
+            padding: 18px 20px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn-vertical:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-btn-vertical.active {
+            background: #e8f5e9;
+            border-left-color: #5A7C49;
+            color: #5A7C49;
+            font-weight: bold;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
+        }
+
+        .menu-overlay.show {
+            display: block;
         }
 
         .main-content {
@@ -313,11 +380,21 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        @media (min-width: 768px) {
+            .cart-section {
+                max-height: calc(100vh - 130px);
+            }
         }
 
         @media (min-width: 1024px) {
             .cart-section {
                 padding: 20px;
+                max-height: 100%;
+                overflow-y: visible;
             }
         }
 
@@ -345,7 +422,7 @@
             flex: 1;
             overflow-y: scroll;
             overflow-x: hidden;
-            max-height: 400px;
+            max-height: 200px;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
             touch-action: pan-y;
@@ -375,13 +452,13 @@
 
         @media (min-width: 768px) {
             .cart-items {
-                max-height: 500px;
+                max-height: 300px;
             }
         }
 
         @media (min-width: 1024px) {
             .cart-items {
-                max-height: 600px;
+                max-height: 500px;
             }
         }
 
@@ -390,14 +467,6 @@
             font-weight: bold;
             margin-bottom: 15px;
             color: #333;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            max-height: 250px;
-            margin-bottom: 15px;
-            -webkit-overflow-scrolling: touch;
         }
 
         @media (min-width: 768px) {
@@ -1137,15 +1206,27 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Pokladna Vinotéka</h1>
-            <div class="nav-buttons">
-                <button class="nav-btn active" onclick="showView('pos')">Pokladna</button>
-                <button class="nav-btn" onclick="showView('sales')">Prodeje</button>
-                <button class="nav-btn" onclick="showView('stats')">Statistiky</button>
-                <button class="nav-btn" onclick="showView('settings')">Nastavení</button>
-                <button class="nav-btn" id="install-btn" style="display: none; background: rgba(255,255,255,0.3);" onclick="installApp()">📱 Instalovat</button>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Slide-out Menu -->
+        <div id="slide-menu" class="slide-menu">
+            <div class="slide-menu-header">
+                <h2>Menu</h2>
+                <button class="close-menu-btn" onclick="toggleMenu()">✕</button>
+            </div>
+            <div class="nav-buttons-vertical">
+                <button class="nav-btn-vertical active" onclick="showViewFromMenu('pos')">📦 Pokladna</button>
+                <button class="nav-btn-vertical" onclick="showViewFromMenu('sales')">📋 Prodeje</button>
+                <button class="nav-btn-vertical" onclick="showViewFromMenu('stats')">📊 Statistiky</button>
+                <button class="nav-btn-vertical" onclick="showViewFromMenu('settings')">⚙️ Nastavení</button>
             </div>
         </div>
+        <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
 
         <!-- POS View -->
         <div id="pos-view" class="main-content">
@@ -1314,7 +1395,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.5-firefox';
+        const APP_VERSION = '1.3.6-minimal';
         const savedVersion = localStorage.getItem('appVersion');
         
         // Detekce prohlížeče a debug info
@@ -1349,6 +1430,24 @@
         function saveData() {
             localStorage.setItem('products', JSON.stringify(products));
             localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+
+        // Toggle hamburger menu
+        function toggleMenu() {
+            const menu = document.getElementById('slide-menu');
+            const overlay = document.getElementById('menu-overlay');
+            menu.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        // Show view from menu and close menu
+        function showViewFromMenu(view) {
+            showView(view);
+            toggleMenu();
+            
+            // Update active state in menu
+            document.querySelectorAll('.nav-btn-vertical').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
         }
 
         // Zobrazení správného view
@@ -1584,8 +1683,6 @@
             }
 
             const lastTransaction = transactions[transactions.length - 1];
-            const date = new Date(lastTransaction.timestamp);
-            const timeStr = date.toLocaleString('cs-CZ');
             
             // Smaž poslední transakci
             transactions.pop();
@@ -1597,13 +1694,7 @@
                 renderSales(currentSalesFilter);
             }
             
-            // Zobrazit co bylo smazáno
-            let message = `✅ Poslední prodej byl stornován!\n\n`;
-            message += `Čas: ${timeStr}\n`;
-            message += `Částka: ${Math.round(lastTransaction.total)} Kč\n`;
-            message += `Položky: ${lastTransaction.items.map(i => `${i.quantity}× ${i.name}`).join(', ')}`;
-            
-            alert(message);
+            // Bez alert zprávy - okamžitě smazat
         }
 
         // Rozdělit účet
@@ -1771,15 +1862,7 @@
             transactions.push(transaction);
             saveData();
             
-            let message = `Prodej dokončen!\n\n`;
-            message += `Způsob platby: ${paymentMethod}\n`;
-            message += `Celkem: ${Math.round(total)} Kč\n`;
-            if (cashReceived) {
-                message += `Přijato: ${Math.round(cashReceived)} Kč\n`;
-                message += `Vrátit: ${Math.round(cashReceived - total)} Kč`;
-            }
-            
-            alert(message);
+            // Bez alert zprávy - okamžitě vyčistit košík
             cart = [];
             cartDiscount = 0;
             renderCart();
