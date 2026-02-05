@@ -182,6 +182,7 @@
             flex-direction: column;
             gap: 15px;
             padding: 15px;
+            padding-bottom: 60px;
             flex: 1;
             overflow: hidden;
         }
@@ -192,17 +193,19 @@
                 grid-template-columns: 1.5fr 1fr;
                 gap: 20px;
                 padding: 20px;
+                padding-bottom: 60px;
             }
         }
 
         .products-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
+            padding-bottom: 60px;
             /* Firefox specific scrollbar */
             scrollbar-width: thin;
             scrollbar-color: #888 #f1f1f1;
@@ -210,30 +213,30 @@
 
         .category {
             background: #f9f9f9;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
         }
 
         @media (min-width: 768px) {
             .category {
-                padding: 15px;
+                padding: 12px;
             }
         }
 
         .category-header {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
-            margin-bottom: 12px;
-            padding: 8px;
+            margin-bottom: 8px;
+            padding: 6px 8px;
             border-radius: 5px;
             color: white;
         }
 
         @media (min-width: 768px) {
             .category-header {
-                font-size: 18px;
-                margin-bottom: 15px;
-                padding: 10px;
+                font-size: 16px;
+                margin-bottom: 10px;
+                padding: 8px;
             }
         }
 
@@ -247,7 +250,7 @@
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         @media (min-width: 480px) {
@@ -259,14 +262,14 @@
         @media (min-width: 768px) {
             .products-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
+                gap: 8px;
             }
         }
 
         @media (min-width: 1200px) {
             .products-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
+                gap: 10px;
             }
         }
 
@@ -381,40 +384,15 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: calc(100vh - 180px);
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            /* Firefox scrollbar */
-            scrollbar-width: thin;
-            scrollbar-color: #888 #f1f1f1;
-        }
-
-        /* Webkit scrollbar for cart-section */
-        .cart-section::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .cart-section::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .cart-section::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        .cart-section::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            height: calc(100vh - 180px);
+            overflow: visible;
         }
 
         @media (min-width: 768px) {
             .cart-section {
                 padding: 12px;
                 padding-bottom: 60px;
-                max-height: calc(100vh - 180px);
+                height: calc(100vh - 180px);
             }
         }
 
@@ -422,7 +400,7 @@
             .cart-section {
                 padding: 15px;
                 padding-bottom: 60px;
-                max-height: calc(100vh - 180px);
+                height: calc(100vh - 180px);
             }
         }
 
@@ -430,7 +408,7 @@
             .cart-section {
                 padding: 15px;
                 padding-bottom: 60px;
-                max-height: calc(100vh - 180px);
+                height: calc(100vh - 180px);
             }
         }
 
@@ -452,6 +430,36 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        .cart-items-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            /* Firefox scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        /* Webkit scrollbar for items wrapper */
+        .cart-items-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .cart-items-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .cart-items {
@@ -1256,9 +1264,11 @@
                 <div class="cart-input-box">
                     <span class="cart-label">Položky</span>
                 </div>
-                <div class="cart-items" id="cart-items"></div>
+                <div class="cart-items-wrapper">
+                    <div class="cart-items" id="cart-items"></div>
+                </div>
                 <div class="action-buttons">
-                    <button class="btn btn-secondary btn-cancel-full" onclick="clearCart()">Smazat</button>
+                    <button class="btn btn-secondary btn-cancel-full" onclick="clearCart()">Smazat vše</button>
                     <button class="btn btn-cash" onclick="payWithCash()">💵 Hotovost</button>
                     <button class="btn btn-primary" onclick="payWithCard()">💳 Karta</button>
                     <button class="btn btn-discount" onclick="applyCartDiscount()">% Sleva</button>
@@ -1411,7 +1421,7 @@
         ];
 
         // Verze aplikace - zvyš číslo pro reset dat
-        const APP_VERSION = '1.3.8-navfix';
+        const APP_VERSION = '1.3.9-scroll-fix';
         const savedVersion = localStorage.getItem('appVersion');
         
         // Detekce prohlížeče a debug info
@@ -1654,7 +1664,7 @@
 
         // Vymazání košíku
         function clearCart() {
-            if (cart.length > 0 && confirm('Opravdu chcete zrušit celý košík?')) {
+            if (cart.length > 0) {
                 cart = [];
                 cartDiscount = 0;
                 renderCart();
